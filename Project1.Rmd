@@ -1,0 +1,123 @@
+---
+title: 'Project 1 - Coffee'
+author: "Nicholas Nasser"
+date: "Due 2023-09-22"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+Coffee_data = read.csv("Project1_coffee.csv")
+library(ggplot2)
+```
+
+# Question 1
+
+---
+
+##### The dataset we will be using in this project contains information that describes various factors of coffee production in different locations around the world. The variables of this dataset include:
+
+---
+
+##### -- The country the coffee was produced in
+
+##### -- The specific region of the country where the coffee was produced
+
+##### -- The altitude at which the coffee was grown
+
+##### -- The year in which the coffee was harvested
+
+##### -- The processing method used for the coffee
+
+##### -- The color of the coffee beans
+
+##### -- The amount of bags of coffee produced
+
+##### -- The professional rating for each source of coffee
+
+---
+
+##### The data from this dataset was obtained from the Coffee Quality Institute's 2018 Review Pages. The CQI (2020) collects its data when it receives samples of coffee beans from around the world for evaluation. For more context, the Coffee Quality Institute is a non-profit organization that allows a company to send them coffee beans for an evaluation of their quality. During the evaluation, the CQI records information about the coffee beans including the physical characteristics of the beans, where they are from, how they are grown/processed, and how much of it is produced. This information accounts for the variables in the coffee dataset (ratings given to each coffee bean by specialists working for the CQI are also included).          
+
+##### *See end of project for formal citation.*
+
+---
+
+##### For this project, we will focus on the professional rating of the coffee as our outcome variable. We will also look at three different predictor variables - Altitude, Bags Produced, and Year Harvested - and determine the relationship between these predictor variables and our specified outcome variable.
+
+---
+
+![Source - Haritanovich, I. (2018). *Coffee Beans*. Pexels. https://www.pexels.com/photo/coffee-beans-1695052/](coffeephotoproject1.jpeg)
+
+---
+
+# Question 2
+
+---
+
+```{r, message = FALSE, warning = FALSE}
+ggplot(data = Coffee_data) + geom_histogram(aes(x = Rating), fill = "blue", color = "black") + labs(title = "Distribution of Professional Coffee Ratings", x = "Coffee Rating (Scale from 0-100)", y = "Count")
+```
+
+---
+
+##### Besides a few outliers that scored a rating below 70, most of the coffee beans received ratings from about 75 to 85 out of 100. The average professional rating of coffee in the dataset was `r round(mean(Coffee_data$Rating), digits = 2)`, and the standard deviation from the average rating was `r round(sd(Coffee_data$Rating), digits = 2)`. These descriptive statistics primarily indicate that a majority of the coffee in this dataset is of relatively high quality.
+
+---
+
+# Question 3
+
+---
+
+```{r, message = FALSE, warning = FALSE}
+ggplot(data = Coffee_data) + geom_point(aes(x = Altitude, y = Rating), color = "red", pch = 20) + labs(title = "Altitude vs. Professional Coffee Rating", x = "Altitude (Meters)", y = "Coffee Rating (Scale from 0-100)")
+```
+
+---
+
+##### The correlation coefficient between the altitude at which the coffee is grown and the rating it receives is `r round(cor(Coffee_data$Altitude, Coffee_data$Rating), digits = 2)`. Based on this value, there is no real relationship between the two variables. This observation is substantiated when looking at the graph above, as most of the data is simply clustered in one spot.
+
+---
+
+
+```{r, message = FALSE, warning = FALSE}
+ggplot(data = Coffee_data) + geom_point(aes(x = BagsProduced, y = Rating), color = "purple", pch = 20) + labs(title = "Bags of Coffee Produced vs. Professional Coffee Rating", x = "Number of Bags Produced", y = "Coffee Rating (Scale from 0-100)")
+```
+
+---
+
+##### The correlation coefficient between the number of bags of coffee produced and the rating it receives is `r round(cor(Coffee_data$BagsProduced, Coffee_data$Rating), digits = 2)`. This value is extremely low, signaling that there is no correlation whatsoever between the variables. We can see this displayed on the graph, as the points are arranged in a completely erratic manner.
+
+---
+
+```{r, message = FALSE, warning = FALSE}
+ggplot(data = Coffee_data) + geom_point(aes(x = Year, y = Rating), color = "green", pch = 20) + labs(title = "Year Harvested vs. Professional Coffee Rating", x = "Year Harvested", y = "Coffee Rating (Scale from 0-100)")
+```
+
+---
+
+##### The correlation coefficient between the year the coffee was harvested and the rating it receives is `r round(cor(Coffee_data$Year, Coffee_data$Rating), digits = 2)`. This value is also extremely low, signaling no relationship between the two variables. When looking at the graph, we can see that the correlation coefficient is what it is partly due to the fact that we used a categorical value for our predictor variable. Unfortunately, this had to be done since there are no other numerical variables to test with the coffee ratings.
+
+---
+
+# Question 4
+
+---
+
+### Conclusion
+
+---
+
+##### After analyzing the relationships between our outcome variable and each of our predictor variables, we can see that there is no real correlation between any of them at all; the correlation values between our outcome variable and altitude, bags produced, and year harvested were 0.17, 0.03, and 0.09 respectively. However, we should not conclude immediately that the predictor variables in the dataset do not affect the rating each coffee bean is given, because ultimately we do not have enough information to do so. There are many other factors that go into coffee production, such as soil quality, temperature, and seasonal weather changes that we need to research first before making any conclusive statements. When we research the topic further by collecting data on new variables such as those mentioned previously, we might find a hidden correlation between the predictor variables tested in this project.
+
+---
+
+##### *Works Cited*
+
+##### *Process for Evaluating Coffees in the Q Coffee System*. (2020). Coffee Quality Institute. [Source](https://database.coffeeinstitute.org/api/s3proxy/get/coffee/files/knwttnz1y1/Process%20for%20Evaluating%20Coffees%20in%20the%20Q%20Coffee%20System%20June%202020.pdf)
+
+##### Haritanovich, I. (2018). *Coffee Beans*. Pexels. [Source](https://www.pexels.com/photo/coffee-beans-1695052/) 
+
+<br>
+<br>
+<br>
